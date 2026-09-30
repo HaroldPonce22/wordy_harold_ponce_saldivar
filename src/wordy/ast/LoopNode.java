@@ -1,5 +1,11 @@
 package wordy.ast;
 
+import wordy.interpreter.LoopExited;
+
+import wordy.interpreter.EvaluationContext;
+
+import java.io.PrintWriter;
+
 import java.util.Map;
 import java.util.Objects;
 
@@ -39,5 +45,16 @@ public class LoopNode extends StatementNode {
     @Override
     public String toString() {
         return "LoopNode{body=" + body + '}';
+    }
+
+    @Override
+    protected void doRun(EvaluationContext context) {
+        try {
+            while(true) {
+                body.run(context);
+            }
+        } catch(LoopExited e) {
+            // "exit loop" was reached somewhere inside the body; stop looping
+        }
     }
 }

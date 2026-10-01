@@ -43,4 +43,9 @@ public final class LoopExitNode extends StatementNode {
     protected void doRun(EvaluationContext context) {
         throw new LoopExited();
     }
+
+    @Override
+    public void compile(PrintWriter out) {
+        out.println("break;");
+    }
 }

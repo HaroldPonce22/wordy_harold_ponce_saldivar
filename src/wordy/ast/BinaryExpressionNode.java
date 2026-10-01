@@ -77,4 +77,29 @@ public class BinaryExpressionNode extends ExpressionNode {
             default: throw new IllegalStateException("Unknown operator: " + operator);
         }
     }
+
+    @Override
+    public void compile(PrintWriter out) {
+        if(operator == Operator.EXPONENTIATION) {
+            out.print("Math.pow(");
+            lhs.compile(out);
+            out.print(", ");
+            rhs.compile(out);
+            out.print(")");
+            return;
+        }
+        String javaOp;
+        switch(operator) {
+            case ADDITION:       javaOp = " + "; break;
+            case SUBTRACTION:    javaOp = " - "; break;
+            case MULTIPLICATION: javaOp = " * "; break;
+            case DIVISION:       javaOp = " / "; break;
+            default: throw new IllegalStateException("Unknown operator: " + operator);
+        }
+        out.print("(");
+        lhs.compile(out);
+        out.print(javaOp);
+        rhs.compile(out);
+        out.print(")");
+    }
 }

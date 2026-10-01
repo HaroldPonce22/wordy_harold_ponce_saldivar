@@ -57,4 +57,10 @@ public class LoopNode extends StatementNode {
             // "exit loop" was reached somewhere inside the body; stop looping
         }
     }
+
+    @Override
+    public void compile(PrintWriter out) {
+        out.print("while(true) ");
+        body.compile(out);
+    }
 }

@@ -93,4 +93,23 @@ public class ConditionalNode extends StatementNode {
         else
             ifFalse.run(context);
     }
+
+    @Override
+    public void compile(PrintWriter out) {
+        String javaOp;
+        switch(operator) {
+            case EQUALS:       javaOp = " == "; break;
+            case LESS_THAN:    javaOp = " < ";  break;
+            case GREATER_THAN: javaOp = " > ";  break;
+            default: throw new IllegalStateException("Unknown operator: " + operator);
+        }
+        out.print("if(");
+        lhs.compile(out);
+        out.print(javaOp);
+        rhs.compile(out);
+        out.print(") ");
+        ifTrue.compile(out);
+        out.print("else ");
+        ifFalse.compile(out);
+    }
 }

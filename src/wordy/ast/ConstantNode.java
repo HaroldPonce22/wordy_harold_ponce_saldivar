@@ -52,4 +52,9 @@ public final class ConstantNode extends ExpressionNode {
     protected double doEvaluate(EvaluationContext context) {
         return value;
     }
+
+    @Override
+    public void compile(PrintWriter out) {
+        out.print(value);
+    }
 }

@@ -1,0 +1,10 @@
+Comparing my solution to Paul's, they're almost the same. I think that's because each AST node does one small job, and the tests pin down the exact behavior and the exact Java output (context.x, break;, the parentheses), so there isn't much room for very different approaches.
+
+The main real difference is the switch. Paul used switch expressions (case ADDITION -> ...), and mine uses the older switch statement with a default that throws. What I learned from his version: if someone adds a new operator and forgets to handle it, a switch expression won't compile, while mine only fails when that code actually runs. That's the same idea as making doRun/doEvaluate (and compile) abstract: catch mistakes at compile time instead of at runtime.
+
+A smaller difference: Paul pulled the comparison in ConditionalNode out into a conditionMatches() helper and picked the branch with a ternary, while mine does it inline with if/else. Mine also prints spaces in the generated Java (x + 1.0), which makes the compiler output a little easier to read in the playground.
+
+Timings for mandel.wordy: 2106 ms with the interpreter vs 61 ms with the compiler, about 35 times faster. The interpreter walks the tree for every pixel and loop step, but the compiler only walks it once and then Java runs plain bytecode which is something new i learned from this assignment.
+
+Overall the assignment was fun but definitely took longer than i expected.
+
